@@ -1,0 +1,31 @@
+﻿@model IEnumerable<applicationPool.Models.AppModel>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Uygulama Listesi</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            @foreach (var app in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img class="card-img-top" src="images/@app.Image" alt="Card image cap">
+                        <div class="card-body bg-light">
+                            <h5 class="card-title">@app.Name</h5>
+                            <button type="button" class="btn" style="background-color: #b0e2ff">@app.Description</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
