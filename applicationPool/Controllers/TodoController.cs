@@ -1,74 +1,79 @@
-﻿using System;
+﻿
+using applicationPool.Models;
 using applicationPool.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using applicationPool.Models;
-using applicationPool.Data;
+using System.Threading.Tasks;
 
-namespace applicationPool.Controllers
+ [Route("api/[controller]")]
+    [ApiController]
+public class ToDoController : Controller
 {
-	public class TodoController : Controller
-	{
-        private readonly ITodoRepository _todoRepository;
+   
+    private readonly ITodoRepository _todoRepository;
 
-        public TodoController(ITodoRepository todoRepository)
+    public ToDoController(ITodoRepository todoRepository)
+    {
+        _todoRepository = todoRepository;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var items = await _todoRepository.GetAllAsync();
+        return Ok(items);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(int id)
+    {
+        var item = await _todoRepository.GetByIdAsync(id);
+        if (item == null)
         {
-            _todoRepository = todoRepository;
+            return NotFound();
+        }
+        return Ok(item);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Add([FromBody] TodoItem item)
+    {
+        if (item == null)
+        {
+            return BadRequest();
         }
 
-        public IActionResult Index()
+        await _todoRepository.AddAsync(item);
+        return CreatedAtAction(nameof(GetById), new { id = item.Id }, item);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(int id, [FromBody] TodoItem item)
+    {
+        if (item == null || id != item.Id)
         {
-            var todoItems = _todoRepository.GetAll();
-            return View(todoItems);
+            return BadRequest();
         }
 
-        [HttpPost]
-        public IActionResult Create(TodoItem todoItem)
+        var existingItem = await _todoRepository.GetByIdAsync(id);
+        if (existingItem == null)
         {
-            if (ModelState.IsValid)
-            {
-                _todoRepository.Add(todoItem);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(todoItem);
+            return NotFound();
         }
 
-        public IActionResult Edit(int id)
+        await _todoRepository.UpdateAsync(item);
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var existingItem = await _todoRepository.GetByIdAsync(id);
+        if (existingItem == null)
         {
-            var todoItem = _todoRepository.GetById(id);
-            if (todoItem == null)
-            {
-                return NotFound();
-            }
-            return View(todoItem);
+            return NotFound();
         }
 
-        [HttpPost]
-        public IActionResult Edit(TodoItem todoItem)
-        {
-            if (ModelState.IsValid)
-            {
-                _todoRepository.Update(todoItem);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(todoItem);
-        }
-
-        public IActionResult Delete(int id)
-        {
-            var todoItem = _todoRepository.GetById(id);
-            if (todoItem == null)
-            {
-                return NotFound();
-            }
-            return View(todoItem);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        public IActionResult DeleteConfirmed(int id)
-        {
-            _todoRepository.Delete(id);
-            return RedirectToAction(nameof(Index));
-        }
+        await _todoRepository.DeleteAsync(id);
+        return NoContent();
     }
 }
-

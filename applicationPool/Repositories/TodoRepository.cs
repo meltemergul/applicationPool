@@ -1,7 +1,9 @@
-﻿using System;
-using applicationPool.Data;
+﻿using applicationPool.Data;
 using applicationPool.Models;
 using applicationPool.Repositories;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public class TodoRepository : ITodoRepository
 {
@@ -12,35 +14,35 @@ public class TodoRepository : ITodoRepository
         _context = context;
     }
 
-    public IEnumerable<TodoItem> GetAll()
+    public async Task<IEnumerable<TodoItem>> GetAllAsync()
     {
-        return _context.TodoItems.ToList();
+        return await _context.ToDoItems.ToListAsync();
     }
 
-    public TodoItem GetById(int id)
+    public async Task<TodoItem> GetByIdAsync(int id)
     {
-        return _context.TodoItems.Find(id);
+        return await _context.ToDoItems.FindAsync(id);
     }
 
-    public void Add(TodoItem todoItem)
+    public async Task AddAsync(TodoItem item)
     {
-        _context.TodoItems.Add(todoItem);
-        _context.SaveChanges();
+        await _context.ToDoItems.AddAsync(item);
+        await _context.SaveChangesAsync();
     }
 
-    public void Update(TodoItem todoItem)
+    public async Task UpdateAsync(TodoItem item)
     {
-        _context.TodoItems.Update(todoItem);
-        _context.SaveChanges();
+        _context.ToDoItems.Update(item);
+        await _context.SaveChangesAsync();
     }
 
-    public void Delete(int id)
+    public async Task DeleteAsync(int id)
     {
-        var todoItem = _context.TodoItems.Find(id);
-        if (todoItem != null)
+        var item = await _context.ToDoItems.FindAsync(id);
+        if (item != null)
         {
-            _context.TodoItems.Remove(todoItem);
-            _context.SaveChanges();
+            _context.ToDoItems.Remove(item);
+            await _context.SaveChangesAsync();
         }
     }
 }

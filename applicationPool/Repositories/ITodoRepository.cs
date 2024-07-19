@@ -4,13 +4,13 @@ using applicationPool.Models;
 
 namespace applicationPool.Repositories
 {
-	public interface ITodoRepository
-	{
-        IEnumerable<TodoItem> GetAll();
-        TodoItem GetById(int id);
-        void Add(TodoItem todoItem);
-        void Update(TodoItem todoItem);
-        void Delete(int id);
+    public interface ITodoRepository
+    {
+        Task<IEnumerable<TodoItem>> GetAllAsync();
+        Task<TodoItem> GetByIdAsync(int id);
+        Task AddAsync(TodoItem item);
+        Task UpdateAsync(TodoItem item);
+        Task DeleteAsync(int id);
     }
 }
 

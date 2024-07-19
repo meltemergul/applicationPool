@@ -60,8 +60,8 @@ public class HomeController : Controller
         public IActionResult BMICalculator() => View();
         public IActionResult Weather() => View();
         public IActionResult RandomQuote() => View();
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+       
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
