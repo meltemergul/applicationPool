@@ -12,6 +12,6 @@ namespace applicationPool.Data
 
         public DbSet<TodoItem> ToDoItems { get; set; }
 
-
+        public DbSet<User> Users { get; set; }
     }
 }

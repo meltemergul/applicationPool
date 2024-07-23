@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using applicationPool.Data;
 using applicationPool.Repositories;
 using applicationPool.Services;
@@ -22,6 +25,29 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Add repository services
 builder.Services.AddScoped<ITodoRepository, TodoRepository>();
 
+// JWT Authentication Configuration
+var key = Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"]);
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.RequireHttpsMetadata = false;
+    options.SaveToken = true;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ValidateIssuer = false,
+        ValidateAudience = false
+    };
+});
+
+// Add UserService
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 
@@ -41,6 +67,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+// Add Authentication and Authorization Middleware
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

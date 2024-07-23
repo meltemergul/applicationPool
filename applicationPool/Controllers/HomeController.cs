@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using applicationPool.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace applicationPool.Controllers;
 
@@ -60,7 +61,12 @@ public class HomeController : Controller
         public IActionResult BMICalculator() => View();
         public IActionResult Weather() => View();
         public IActionResult RandomQuote() => View();
-       
+
+    [Authorize]
+    public IActionResult Secure()
+    {
+        return View();
+    }
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
