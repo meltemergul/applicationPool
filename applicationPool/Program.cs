@@ -6,9 +6,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using applicationPool.Data;
 using applicationPool.Repositories;
+using applicationPool.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add WeatherService
+builder.Services.AddHttpClient<IWeatherService, WeatherService>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -18,6 +21,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 // Add repository services
 builder.Services.AddScoped<ITodoRepository, TodoRepository>();
+
 
 var app = builder.Build();
 

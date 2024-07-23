@@ -16,11 +16,15 @@
     <Folder Include="Data\" />
     <Folder Include="Repositories\" />
     <Folder Include="Views\ToDo\" />
+    <Folder Include="Services\" />
+    <Folder Include="Views\Weather\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Data\" />
     <None Remove="Repositories\" />
     <None Remove="Views\ToDo\" />
+    <None Remove="Services\" />
+    <None Remove="Views\Weather\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.0" />
@@ -35,5 +39,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.0" />
   </ItemGroup>
 </Project>

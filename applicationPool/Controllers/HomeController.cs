@@ -20,7 +20,7 @@ public class HomeController : Controller
                 new AppModel { Id = 1, Name = "To Do App", Description = "Go to App" ,Image="work-order.png",Url = "/Home/TodoList" },
                 new AppModel { Id = 2, Name = "BMI Calculator", Description = "Go to App",Image="calculator.png" ,Url = "/Home/BMICalculator"},
                 new AppModel { Id = 3, Name = "Random Qutoes", Description = "Go to App" ,Image="quotes.png",Url="/Home/RandomQuote"},
-                new AppModel { Id = 4, Name = "Weather App", Description = "Go to App" ,Image="season.png",Url = "/Home/Weather" }
+                new AppModel { Id = 4, Name = "Weather App", Description = "Go to App" ,Image="season.png",Url = "/Weather/Index" }
             };
 
             return View(apps);

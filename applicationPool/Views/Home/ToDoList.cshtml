@@ -1,20 +1,23 @@
 ﻿@{
-    ViewData["Title"] = "Yapılacaklar Listesi";
+    ViewData["Title"] = "To Do List";
 }
 
 <h1>@ViewData["Title"]</h1>
 
 <form id="add-todo-form">
     <div class="form-group">
-
-        <input type="text" id="todo-title" name="title" class="form-control" required />
+        <label for="todo-title">To Do</label>
+        <input type="text" id="todo-title" class="form-control" required>
     </div>
-    <button type="submit" class="btn btn-primary">Ekle</button>
+  
+    <button type="submit" class="btn btn-primary btn-block">Ekle</button>
 </form>
 
-<h2>Yapılacaklar</h2>
+
+<h2>To Do</h2>
 <ul id="todo-list" class="list-group">
     <!-- Liste elemanları buraya eklenecek -->
+
 </ul>
 
 <!-- Güncelleme Modal -->
@@ -26,19 +29,24 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <input type="hidden" id="edit-todo-id">
                 <div class="form-group">
-                    <label for="edit-todo-title">Başlık:</label>
-                    <input type="text" id="edit-todo-title" class="form-control" required />
+                    <label for="edit-todo-title">Başlık</label>
+                    <input type="text" id="edit-todo-title" class="form-control" required>
                 </div>
-                <input type="hidden" id="edit-todo-id" />
+                <div class="form-group">
+                    <label for="edit-todo-completed">Tamamlandı mı?</label>
+                    <input type="checkbox" id="edit-todo-completed" class="form-check-input">
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
-                <button type="button" id="update-todo-btn" class="btn btn-primary">Güncelle</button>
+                <button type="button" class="btn btn-primary" id="update-todo-btn">Güncelle</button>
             </div>
         </div>
     </div>
 </div>
+
 
 @section Scripts {
     <script src="~/js/app.js"></script>

@@ -60,7 +60,11 @@ public class ToDoController : Controller
             return NotFound();
         }
 
-        await _todoRepository.UpdateAsync(item);
+        existingItem.Title = item.Title;
+        existingItem.IsCompleted = item.IsCompleted;
+
+        await _todoRepository.UpdateAsync(existingItem);
+
         return NoContent();
     }
 
