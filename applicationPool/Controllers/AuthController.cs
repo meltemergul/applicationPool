@@ -24,17 +24,19 @@ namespace applicationPool.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] User login)
+        public IActionResult Login([FromBody] Login login)
         {
+            if (login == null || string.IsNullOrEmpty(login.Username) || string.IsNullOrEmpty(login.Password))
+                return BadRequest("Invalid login credentials.");
+
             var user = _userService.Authenticate(login.Username, login.Password);
 
             if (user == null)
-                return Unauthorized();
+                return Unauthorized("Invalid username or password.");
 
             var token = _tokenService.GenerateToken(user);
             return Ok(new { token });
         }
-
         [HttpGet("login")]
         public IActionResult LoginPage()
         {
@@ -71,3 +73,4 @@ namespace applicationPool.Controllers
         }
     }
 }
+ 

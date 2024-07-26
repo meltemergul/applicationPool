@@ -1,27 +1,57 @@
-﻿@model TodoItem
-
-@{
-    ViewData["Title"] = "Create ToDo Item";
+﻿@{
+    ViewData["Title"] = "To Do List";
 }
 
-<h1>Create ToDo Item</h1>
+<h1>@ViewData["Title"]</h1>
 
-<form asp-action="Create">
+<form id="add-todo-form">
     <div class="form-group">
-        <label asp-for="Title" class="control-label"></label>
-        <input asp-for="Title" class="form-control" />
-        <span asp-validation-for="Title" class="text-danger"></span>
+        <label for="todo-title">To Do</label>
+        <input type="text" id="todo-title" class="form-control" required>
     </div>
     <div class="form-group">
-        <label asp-for="IsCompleted" class="control-label"></label>
-        <input asp-for="IsCompleted" class="form-control" />
-        <span asp-validation-for="IsCompleted" class="text-danger"></span>
+        <label for="todo-completed">Tamamlandı mı?</label>
+        <input type="checkbox" id="todo-completed" class="form-check-input">
     </div>
-    <div class="form-group">
-        <input type="submit" value="Create" class="btn btn-primary" />
-    </div>
+    <button type="submit" class="btn btn-primary btn-block">Ekle</button>
 </form>
 
-<div>
-    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+<h2>To Do</h2>
+<ul id="todo-list" class="list-group">
+    <!-- Liste elemanları buraya eklenecek -->
+</ul>
+
+<!-- Güncelleme Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Güncelle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="edit-todo-id">
+                <div class="form-group">
+                    <label for="edit-todo-title">Başlık</label>
+                    <input type="text" id="edit-todo-title" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-todo-completed">Tamamlandı mı?</label>
+                    <input type="checkbox" id="edit-todo-completed" class="form-check-input">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                <button type="button" class="btn btn-primary" id="update-todo-btn">Güncelle</button>
+            </div>
+        </div>
+    </div>
 </div>
+
+@section Scripts {
+    <script src="~/js/app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+}

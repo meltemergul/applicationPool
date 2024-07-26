@@ -35,7 +35,7 @@
             var kilo = parseFloat($('#kilo').val());
 
             $.ajax({
-                url: '@Url.Action("CalculateBMI", "Home")',
+                url: '@Url.Action("CalculateBMI", "BMI")',
                 type: 'POST',
                 data: { boy: boy, kilo: kilo },
                 success: function(result) {

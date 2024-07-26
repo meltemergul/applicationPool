@@ -1,11 +1,16 @@
 ﻿@{
     ViewData["Title"] = "Weather";
 }
-<div class="row mb-5" style="background-color:steelblue">
+<div class="row p-5" style="background-color: #039BE5">
     <h1 class="text-white">Weather App</h1>
     <div class="col-6">
-        . <input class="form-control " type="text" id="cityName" placeholder="Enter city name" />
-        <button class="btn btn-outline-light btn-block" id="searchBtn">Ara</button>
+        <div class="row">
+            
+   <div class="col"><input class="form-control mb-2" type="text" id="cityName" placeholder="Enter city name" /></div>
+        <div class="col"><button class="btn btn-light mb-2" id="searchBtn">Ara</button></div>
+    
+        </div>
+     
         <div id="weatherInfo" >
             <!-- Weather data will be populated here -->
         </div>

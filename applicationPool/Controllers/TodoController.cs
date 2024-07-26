@@ -1,11 +1,10 @@
-﻿
-using applicationPool.Models;
+﻿using applicationPool.Models;
 using applicationPool.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
  [Route("api/[controller]")]
-    [ApiController]
+ [ApiController]
 public class ToDoController : Controller
 {
    

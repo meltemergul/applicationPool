@@ -38,7 +38,9 @@
             success: function () {
                 loadTodoItems();
                 var myModal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
-                myModal.hide();
+                if (myModal) {
+                    myModal.hide();
+                }
             },
             error: function (error) {
                 console.error("Hata:", error);
